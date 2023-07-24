@@ -22,7 +22,7 @@ function openCvReady() {
         utils.createFileFromUrl(faceCascadeFile, faceCascadeFile, () => {
             faceClassifier.load(faceCascadeFile); 
 
-
+        let eyes = new cv.RectVector();
         let eyeClassifier = new cv.CascadeClassifier();
         let eyeCascadeFile = 'haarcascade_eye.xml';
         utils.createFileFromUrl(eyeCascadeFile, eyeCascadeFile, () => {
