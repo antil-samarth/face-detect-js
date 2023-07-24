@@ -38,11 +38,11 @@ function openCvReady() {
             } catch (err) {
                 console.log(err);
             }
-/*             for (let i = 0; i < faces.size(); ++i) {
+            for (let i = 0; i < faces.size(); ++i) {
                 let face = faces.get(i);
                 let point1 = new cv.Point(face.x, face.y);
                 let point2 = new cv.Point(face.x + face.width, face.y + face.height);
-            } */
+            } 
             if (faces.size() === 0) {
                 cv.putText(dst, "Please look at the camera", { x: 50, y: 50 }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 0, 255, 255], 2);
             }
