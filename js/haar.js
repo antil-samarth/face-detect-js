@@ -21,7 +21,16 @@ function openCvReady() {
         let faceCascadeFile = 'haarcascade_frontalface_default.xml'; 
         utils.createFileFromUrl(faceCascadeFile, faceCascadeFile, () => {
             faceClassifier.load(faceCascadeFile); 
+
+
+        let eyeClassifier = new cv.CascadeClassifier();
+        let eyeCascadeFile = 'haarcascade_eye.xml';
+        utils.createFileFromUrl(eyeCascadeFile, eyeCascadeFile, () => {
+            eyeClassifier.load(eyeCascadeFile); // in the callback, load the eye cascade from file
         });
+        });
+
+        
         
         const FPS = 24;
 
@@ -34,6 +43,8 @@ function openCvReady() {
             
             try {
                 faceClassifier.detectMultiScale(gray, faces, 1.1, 3, 0);
+                eyeClassifier.detectMultiScale(gray, eyes, 1.1, 3, 0);
+
                 /* console.log(faces.size()); */
             } catch (err) {
                 console.log(err);
@@ -43,7 +54,13 @@ function openCvReady() {
                 let point1 = new cv.Point(face.x, face.y);
                 let point2 = new cv.Point(face.x + face.width, face.y + face.height);
                 cv.rectangle(dst, point1, point2, [255, 0, 0, 255]);
-            } 
+            }
+            for (let i = 0; i < eyes.size(); ++i) {
+                    let eye = eyes.get(i);
+                    let point1 = new cv.Point(eye.x, eye.y);
+                    let point2 = new cv.Point(eye.x + eye.width, eye.y + eye.height);
+                    cv.rectangle(dst, point1, point2, [0, 255, 0, 255]);
+            }
             if (faces.size() === 0) {
                 cv.putText(dst, "Please look at the camera", { x: 50, y: 50 }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 0, 255, 255], 2);
             }
